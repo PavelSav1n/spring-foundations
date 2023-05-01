@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        https://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="CoffeeService" class="ru.itsjava.services.CoffeeServiceImpl"/>
+    <bean id="ioService" class="ru.itsjava.services.IOServiceImpl"/>
+    <bean id="CoffeeHouse" class="ru.itsjava.services.CoffeeHouseImpl">
+        <constructor-arg ref="CoffeeService"/>
+        <constructor-arg ref="ioService"/>
+    </bean>
+
+</beans>

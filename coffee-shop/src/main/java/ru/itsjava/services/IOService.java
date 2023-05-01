@@ -1,2 +1,5 @@
-package ru.itsjava.services;public interface IOService {
+package ru.itsjava.services;
+
+public interface IOService {
+    String input();
 }

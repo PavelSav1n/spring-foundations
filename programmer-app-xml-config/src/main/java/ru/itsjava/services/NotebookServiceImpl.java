@@ -1,6 +1,6 @@
 package ru.itsjava.services;
 
-import ru.itsjava.domen.Notebook;
+import ru.itsjava.domain.Notebook;
 
 public class NotebookServiceImpl implements NotebookService {
     @Override
