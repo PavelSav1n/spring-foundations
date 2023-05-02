@@ -10,8 +10,11 @@
     <version>1.0-SNAPSHOT</version>
     <modules>
         <module>core</module>
-        <module>coffee-shop</module>
+        <module>coffee-shop-xml-config</module>
         <module>programmer-app-xml-config</module>
+        <module>core-java-based</module>
+        <module>programmer-app-java-based-config</module>
+        <module>coffee-shop-java-based-config</module>
     </modules>
 
     <properties>
