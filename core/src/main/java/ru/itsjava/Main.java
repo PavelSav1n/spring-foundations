@@ -6,6 +6,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 public class Main {
     public static void main(String[] args) {
 
+        // XML Based Configuration of Spring
         // CPXAC -- shortcode of ClassPathXmlApplicationContext
         ApplicationContext context = new ClassPathXmlApplicationContext("context.xml");
 
