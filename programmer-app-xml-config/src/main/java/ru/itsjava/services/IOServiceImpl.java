@@ -3,13 +3,15 @@ package ru.itsjava.services;
 import lombok.SneakyThrows;
 
 import java.io.BufferedReader;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 
 public class IOServiceImpl implements IOService {
     private final BufferedReader bufferedReader;
 
-    public IOServiceImpl() {
-        this.bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+    // Вызываем конструктор из app.properties там и передаём в качестве InputStream (java.lang.System).in
+    public IOServiceImpl(InputStream inputStream) {
+        this.bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
     }
 
     @SneakyThrows
