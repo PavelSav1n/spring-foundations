@@ -6,4 +6,9 @@
 
     <bean id="pig" class="ru.itsjava.Piglet"/>
 
+    <bean id="farmer" class="ru.itsjava.KindFarmer">
+        <constructor-arg ref="pig"/>
+        <!--  <property name="animal" ref="pig"/>-->
+    </bean>
+
 </beans>
