@@ -5,7 +5,7 @@
         https://www.springframework.org/schema/beans/spring-beans.xsd">
 
     <bean id="CoffeeService" class="ru.itsjava.services.CoffeeServiceImpl"/>
-    <bean id="ioService" class="ru.itsjava.services.IOServiceImpl"/>
+    <bean id="ioService" class="ru.IOServiceImpl"/>
     <bean id="CoffeeHouse" class="ru.itsjava.services.CoffeeHouseImpl">
         <constructor-arg ref="CoffeeService"/>
         <constructor-arg ref="ioService"/>
