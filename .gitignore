@@ -2,6 +2,7 @@
 /coffee-shop-java-based-config/target
 /coffee-shop-xml-config/target
 /core/target
+/core-annotation-based/target
 /core-java-based/target
 /programmer-app-java-based-config/target
 /programmer-app-xml-config/target/

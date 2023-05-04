@@ -15,6 +15,7 @@
         <module>core-java-based</module>
         <module>programmer-app-java-based-config</module>
         <module>coffee-shop-java-based-config</module>
+        <module>core-annotation-based</module>
     </modules>
 
     <properties>
