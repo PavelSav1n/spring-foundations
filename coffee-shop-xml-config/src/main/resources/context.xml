@@ -4,9 +4,9 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans
         https://www.springframework.org/schema/beans/spring-beans.xsd">
 
-    <bean id="CoffeeService" class="ru.itsjava.services.CoffeeServiceImpl"/>
+    <bean id="CoffeeService" class="ru.CoffeeServiceImpl"/>
     <bean id="ioService" class="ru.IOServiceImpl"/>
-    <bean id="CoffeeHouse" class="ru.itsjava.services.CoffeeHouseImpl">
+    <bean id="CoffeeHouse" class="ru.CoffeeHouseImpl">
         <constructor-arg ref="CoffeeService"/>
         <constructor-arg ref="ioService"/>
     </bean>
