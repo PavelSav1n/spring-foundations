@@ -1,4 +1,5 @@
 /.idea
+/coffee-shop-annotation-based-config/target
 /coffee-shop-java-based-config/target
 /coffee-shop-xml-config/target
 /core/target
