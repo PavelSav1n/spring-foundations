@@ -18,6 +18,7 @@
         <module>core-annotation-based</module>
         <module>programmer-app-annotation-based-config</module>
         <module>coffee-shop-annotation-based-config</module>
+        <module>beans-lifecycle-and-scope</module>
     </modules>
 
     <properties>
