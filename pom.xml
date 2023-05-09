@@ -19,6 +19,7 @@
         <module>programmer-app-annotation-based-config</module>
         <module>coffee-shop-annotation-based-config</module>
         <module>beans-lifecycle-and-scope</module>
+        <module>proxy</module>
     </modules>
 
     <properties>
