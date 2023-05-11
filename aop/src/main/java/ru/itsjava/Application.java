@@ -7,7 +7,7 @@ import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import ru.itsjava.domain.Film;
 import ru.itsjava.services.FilmService;
 
-@EnableAspectJAutoProxy
+@EnableAspectJAutoProxy // Аннотация для включения AspectJ аннотаций
 @ComponentScan("ru.itsjava")
 public class Application {
     public static void main(String[] args) {
