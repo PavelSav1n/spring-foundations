@@ -14,5 +14,6 @@ public class Application {
         ApplicationContext context = new AnnotationConfigApplicationContext(Application.class);
 
         context.getBean("coffeeHouseImpl", CoffeeHouseImpl.class).customerCoffeeOrder();
+
     }
 }
