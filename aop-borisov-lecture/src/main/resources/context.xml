@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Последовательность работы:
+    1. BeanDefinitionReader считывает все singleton бины из объявленных ниже и кладёт их в Map BeanDefinitions id бина и его декларация (из какого класса его надо создавать,
+    есть ли у него init метод и как он называется, какие у него проперти и все остальные подробности бина, которые мы создаём в context.xml) -->
+
+<!-- 2. После того, как эти BeanDefinitions созданы BeanFactory вытаскивает из BeanDefinitions все объекты, которые имплементируют BeanPostProcessor и откладывает в сторону.
+     3. С их помощью начинает создавать и настраивать из оставшихся классов остальные объекты.
+        - сначала по очереди отрабатывают все методы Object postProcessBeforeInitialization(Object bean, String beanName) у всех BPP, которые обрабатывают данный бин
+        - потом отрабатывает init() метод
+        - потом отрабатывает Object postProcessAfterInitialization(Object bean, String beanName)
+     4. После чего складывает настроенные бины в контейнер IoC Container.
+        Примечание: По умолчанию, как только создаётся контекст создаются так же все singleton и складываются в IoC Container.
+                    Prototype создаются в момент запроса и спринг его отдаёт и не помещает в контейнер. Если мы будем прописывать
+                    destroy методы для бина, то он будет работать для singleton, а для prototype нет, потому что в тот момент, как
+                    context закрывается, спринг проходит по контейнеру, находит все destroy методы и закрывает их. -->
+
+
+<!-- * BeanPostProcessor настраивает бины до того как они попали в IoC Container
+     У этого интерфейса есть два метода:
+     Object postProcessBeforeInitialization(Object bean, String beanName) - вызывается до init метода
+     Object postProcessAfterInitialization(Object bean, String beanName) - вызывается после init метода
+     Между двумя этими пост процессорами вызывается init метод
+     - init-method (xml)
+     - @PostConstruct (annotation)
+     - afterPropertiesSet (устаревший)(спринг2 имплементировать интерфейс initializingBean и прописать указанный метод)
+     Для того, чтобы созданный нами BeanPostProcessor заработал, нужно его прописать в контексте
+
+     init метод - чтобы работать с экземпляром объекта и не работать с конструктором, который отрабатывает до передачи объекта в BeanPostProcessor, нужно написать init метод.
+
+     По умолчанию xml ничего не знает про аннотации. Про аннотации знают BeanPostProcessor. Мы написали свою @InjectRandomInt и пост процессор к ней, поэтому у нас работает.
+     Для того, чтобы @PostConstruct заработал, в xml нужно прописать org.springframework.context.annotation.CommonAnnotationBeanPostProcessor (нужна библиотека javax.annotation-api в pom.xml)
+     - чтобы не запоминать эти длинные названия библиотек были придуманы неймспейсы, чтобы упростить задачу:
+        <context:annotation-config/> - добавляет кусок xml отвечающий за добавления аннотаций в контекст
+        <context:component-scan/> - принимает какой-то пакет и добавляет все эти постпроцессоры в контекст
+-->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        https://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
+
+    <!-- наш BeanPostProcessor (можно без id, потому что он никуда не встраивается)-->
+    <bean class="quoters.InjectRandomIntAnnotationBeanPostProcessor"/>
+
+    <!-- Для того, чтобы заработал @PostConstruct-->
+    <!--<bean class="org.springframework.context.annotation.CommonAnnotationBeanPostProcessor"/>-->
+
+    <!-- или можно сократить запись строчкой ниже:-->
+    <context:annotation-config/>
+
+
+    <!-- Создание бина:
+    1. просканировался XML
+    2. создались BeanDefinitions
+    3. спринг понимает, что нужно создать singleton quoters.TerminatorQuoter
+    4. при помощи рефлексии запускает конструктор
+    5. конструктор отработал, объект создался
+    6. когда объект создан, спринг может его настраивать
+     если обратиться в конструкторе к полям и методам, которые должен настроить спринг, то будет null если объект и 0 если примитив, потому что экземпляра ещё нет-->
+    <bean class="quoters.TerminatorQuoter" id="terminatorQuoter">
+        <property name="message" value="I'll be back"/>
+    </bean>
+
+
+</beans>

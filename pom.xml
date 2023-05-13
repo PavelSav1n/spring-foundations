@@ -21,6 +21,7 @@
         <module>beans-lifecycle-and-scope</module>
         <module>proxy</module>
         <module>aop</module>
+        <module>aop-borisov-lecture</module>
     </modules>
 
     <properties>
