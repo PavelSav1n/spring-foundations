@@ -40,14 +40,19 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans
         https://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
 
-    <!-- наш BeanPostProcessor (можно без id, потому что он никуда не встраивается)-->
+    <!-- наш ProfilingHandlerBeanPostProcessor который добавляет к аннотированным методам профилирование-->
+    <bean class="quoters.ProfilingHandlerBeanPostProcessor"/>
+
+    <!-- наш BeanPostProcessor, который генерит случайное число в аннотированных полях (можно без id, потому что он никуда не встраивается)-->
     <bean class="quoters.InjectRandomIntAnnotationBeanPostProcessor"/>
 
+
+
     <!-- Для того, чтобы заработал @PostConstruct-->
-    <!--<bean class="org.springframework.context.annotation.CommonAnnotationBeanPostProcessor"/>-->
+    <bean class="org.springframework.context.annotation.CommonAnnotationBeanPostProcessor"/>
 
     <!-- или можно сократить запись строчкой ниже:-->
-    <context:annotation-config/>
+<!--    <context:annotation-config/>-->
 
 
     <!-- Создание бина:
