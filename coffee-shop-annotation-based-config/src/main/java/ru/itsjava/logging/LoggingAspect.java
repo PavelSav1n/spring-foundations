@@ -6,7 +6,6 @@ import org.springframework.stereotype.Component;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.io.PrintWriter;
 
 @Aspect
@@ -24,19 +23,20 @@ public class LoggingAspect {
         }
     }
 
-    //TODO: Отлов exception так и не получился. Код ниже ломает создание бина coffeeHouseImpl и вылетает с BeanNotOfRequiredTypeException
-    //TODO: Pointcut указывающий на вызов конструктора тоже не получился. Нужен ман по выражением Pointcut'ов
+    // Закоменченный ниже pointcut не отловился. Вылетала ошибка на создание бина coffeeHouseImpl -- BeanNotOfRequiredTypeException (был sun...$Proxy7)
+    // Видимо execution (* *(..)) не отлавливал нужный класс.
 //    @Pointcut("within(ru.itsjava..*) && execution(* *(..))")
-//    public void matchAllMyMethods() {}
-//
-//    @AfterThrowing(value = "matchAllMyMethods()", throwing = "exception")
-//    public void logLastExceptionNoCoffeeForThatPrice(JoinPoint joinPoint) {
-//        try (PrintWriter printWriter = new PrintWriter(logFileLastException)) {
-//            System.out.println("ERROR");
-//            printWriter.println("Last customer wanted a coffee for a " + joinPoint.getArgs()[0].toString() + "$");
-//        } catch (FileNotFoundException e) {
-//            System.out.println("logLastExceptionNoCoffeeForThatPrice");
-//        }
-//    }
+    @Pointcut("execution(* ru.itsjava.services.CoffeeService.getCoffeeByPrice(..))")
+    public void matchAllMyMethods() {}
+
+    @AfterThrowing(value = "matchAllMyMethods()", throwing = "exception")
+    public void logLastExceptionNoCoffeeForThatPrice(JoinPoint joinPoint) {
+        try (PrintWriter printWriter = new PrintWriter(logFileLastException)) {
+            System.out.println("ERROR");
+            printWriter.println("Last customer wanted a coffee for a " + joinPoint.getArgs()[0].toString() + "$");
+        } catch (FileNotFoundException e) {
+            System.out.println("logLastExceptionNoCoffeeForThatPrice");
+        }
+    }
 
 }
