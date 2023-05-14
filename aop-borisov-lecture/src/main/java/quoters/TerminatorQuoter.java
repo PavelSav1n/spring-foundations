@@ -30,7 +30,7 @@ public class TerminatorQuoter implements Quoter {
     private String message;
 
     public TerminatorQuoter() {
-        // Тут будет 0, потому что спринг сначала создаёт объект, а затем отдаёт его в BeanPostProcessor
+        // Тут repeat будет 0, потому что спринг сначала создаёт объект, а затем отдаёт его в BeanPostProcessor
         System.out.println("Phase 1 -- constructor");
     }
     // поэтому пишем init метод, чтобы работать с объектом в BeanPostProcessor:
@@ -39,7 +39,7 @@ public class TerminatorQuoter implements Quoter {
                     // 2. пока не пропишем org.springframework.context.annotation.CommonAnnotationBeanPostProcessor в context.xml
                     // - или <context:annotation-config/>
     public void init() {
-        System.out.println("Phase 2 -- init method");
+        System.out.println("Phase 2 -- @PostConstruct (init method)");
         System.out.println(repeat);
     }
 
@@ -50,7 +50,9 @@ public class TerminatorQuoter implements Quoter {
     }
 
     @Override
+    @PostProxy
     public void sayQuote() {
+        System.out.println("Phase 3 -- @PostProxy (Application Listener)");
         for (int i = 0; i < repeat; i++) {
             System.out.println(i + 1 + ". message = " + message);
         }

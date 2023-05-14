@@ -6,7 +6,7 @@
 <!-- 2. После того, как эти BeanDefinitions созданы BeanFactory вытаскивает из BeanDefinitions все объекты, которые имплементируют BeanPostProcessor и откладывает в сторону.
      3. С их помощью начинает создавать и настраивать из оставшихся классов остальные объекты.
         - сначала по очереди отрабатывают все методы Object postProcessBeforeInitialization(Object bean, String beanName) у всех BPP, которые обрабатывают данный бин
-        - потом отрабатывает init() метод
+        - потом отрабатывает init() метод (с аннотацией @PostConstruct)
         - потом отрабатывает Object postProcessAfterInitialization(Object bean, String beanName)
      4. После чего складывает настроенные бины в контейнер IoC Container.
         Примечание: По умолчанию, как только создаётся контекст создаются так же все singleton и складываются в IoC Container.
@@ -33,6 +33,24 @@
         <context:annotation-config/> - добавляет кусок xml отвечающий за добавления аннотаций в контекст
         <context:component-scan/> - принимает какой-то пакет и добавляет все эти постпроцессоры в контекст
 -->
+<!-- Application Listener -->
+<!-- Этот Listener может слушать context спринга. Вс ивенты, которые с ним происходят, например:
+        - ContextStartedEvent - context начал своё построение. Когда он закончил, он всегда делает ContextRefreshedEvent
+        - ContextStoppedEvent
+        - ContextRefreshedEvent - поэтому в большинстве случаев Listener будет слушать ContextRefreshedEvent
+        - ContextClosedEvent
+     Зачем всё это нужно. Например, у нас есть сервис, у которого есть метод WarmCache, он должен разогреть свой собственный кеш (идёт в БД, что-то меняет, берёт, наполняет
+     свой Collection какой-то инфой и после этого он готов).
+     Вопрос: где этот метод вызывать?
+        - в конструкторе? - нет, на этапе вызова конструктора ещё ничего не настроено, ничего нет, бин не настроен и он ещё не может сходить ни в БД, никуда.
+        - PostConstruct - отчасти. Это может работать, но например транзакций (Над WarmCache стоит аннотация @Transactional) на этапе PostConstruct ещё не существуют.
+          На каком этапе BPP запихает логику связанную с транзакциями в наш класс? После того как @PostConstruct отработал.
+          @PostConstruct отрабатывает до того, как настроились все прокси со всей дополнительной логикой.
+     Нужна третья фаза конструктора.
+
+
+
+-->
 
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -40,19 +58,22 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans
         https://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
 
-    <!-- наш ProfilingHandlerBeanPostProcessor который добавляет к аннотированным методам профилирование-->
-    <bean class="quoters.ProfilingHandlerBeanPostProcessor"/>
-
     <!-- наш BeanPostProcessor, который генерит случайное число в аннотированных полях (можно без id, потому что он никуда не встраивается)-->
     <bean class="quoters.InjectRandomIntAnnotationBeanPostProcessor"/>
 
+    <!-- наш ProfilingHandlerBeanPostProcessor который добавляет к аннотированным методам профилирование-->
+    <bean class="quoters.ProfilingHandlerBeanPostProcessor"/>
+
+    <!-- наш PostProxyInvokerContextListener, который добавляет третью фазу - @PostProxy (WarmCache)-->
+    <bean class="quoters.PostProxyInvokerContextListener"/>
 
 
     <!-- Для того, чтобы заработал @PostConstruct-->
-    <bean class="org.springframework.context.annotation.CommonAnnotationBeanPostProcessor"/>
+    <!--    <bean class="org.springframework.context.annotation.CommonAnnotationBeanPostProcessor"/>-->
 
     <!-- или можно сократить запись строчкой ниже:-->
-<!--    <context:annotation-config/>-->
+    <!-- Для того, чтобы заработал @PostProxy (получить доступ к BeanFactory в PostProxyInvokerContextListener)-->
+    <context:annotation-config/>
 
 
     <!-- Создание бина:

@@ -8,8 +8,8 @@ package quoters;
 //
 // ПРИМЕЧАНИЕ: То, что у нас сейчас этот класс написан и мы его вызываем в ProfilingHandlerBeanPostProcessor, не значит, что мы зарегистрировали его в MBean Server.
 // Для этого нужно это явно прописать. Мы будем прописывать в конструкторе ProfilingHandlerBeanPostProcessor
-public class ProfilingController implements ProfilingControllerMBean{
-    private boolean enabled;
+public class ProfilingController implements ProfilingControllerMBean {
+    private boolean enabled = true;
 
     public boolean isEnabled() {
         return enabled;

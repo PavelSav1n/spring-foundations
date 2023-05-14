@@ -17,7 +17,7 @@ public class InjectRandomIntAnnotationBeanPostProcessor implements BeanPostProce
                 int min = annotation.min(); // получаем из этой аннотации поля
                 int max = annotation.max();
                 Random random = new Random();
-                int randomInt = min+random.nextInt(max-min); // генерим случайное число
+                int randomInt = min + random.nextInt(max - min); // генерим случайное число
                 field.setAccessible(true); // правим field
 //                field.set(randomInt); // чтобы не прокидывать исключения и try/catch используем следующую особенность спринга:
                 ReflectionUtils.setField(field, bean, randomInt); // 1. для какого поля будем вставлять значение, 2. для какого объекта поле нужно будет засунуть 3. значение
