@@ -7,17 +7,17 @@
 
     <context:property-placeholder location="app.properties"/>
 
-    <bean id="notebookService" class="ru.NotebookServiceImpl">
+    <bean id="notebookService" class="ru.itsjava.services.NotebookServiceImpl">
         <constructor-arg name="firm" value="${notebook.firm}"/>
         <constructor-arg name="model" value="${notebook.model}"/>
         <constructor-arg name="year" value="${notebook.year}"/>
     </bean>
 
-    <bean id="ioService" class="ru.IOServiceImpl">
+    <bean id="ioService" class="ru.itsjava.services.IOServiceImpl">
         <constructor-arg name="inputStream" value="#{T(java.lang.System).in}"/>
     </bean>
 
-    <bean id="programmerService" class="ru.ProgrammerServiceImpl">
+    <bean id="programmerService" class="ru.itsjava.services.ProgrammerServiceImpl">
         <constructor-arg ref="notebookService"/>
         <constructor-arg ref="ioService"/>
     </bean>
