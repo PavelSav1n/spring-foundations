@@ -13,6 +13,7 @@
         <module>aop-borisov-lecture</module>
         <module>beans-lifecycle-and-scope</module>
         <module>coffee-shop-annotation-based-config</module>
+        <module>coffee-shop-spring-boot</module>
         <module>coffee-shop-java-based-config</module>
         <module>coffee-shop-xml-config</module>
         <module>core</module>

@@ -9,7 +9,7 @@ import java.io.InputStreamReader;
 public class IOServiceImpl implements IOService {
     private final BufferedReader bufferedReader;
 
-    // Вызываем конструктор из app.properties там и передаём в качестве InputStream (java.lang.System).in
+    // Вызываем конструктор из context.xml и передаём в качестве InputStream (java.lang.System).in
     public IOServiceImpl(InputStream inputStream) {
         this.bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
     }
