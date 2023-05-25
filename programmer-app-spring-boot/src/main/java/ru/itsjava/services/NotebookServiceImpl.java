@@ -17,6 +17,8 @@ public class NotebookServiceImpl implements NotebookService {
         this.firm = firm;
         this.model = model;
         this.year = year;
+
+        System.out.println("This is NotebookServiceImpl constructor"); // for test
     }
 
     @Override

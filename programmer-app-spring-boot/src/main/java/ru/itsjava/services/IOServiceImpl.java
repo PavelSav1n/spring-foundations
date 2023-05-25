@@ -15,6 +15,8 @@ public class IOServiceImpl implements IOService {
     // Значения из app.properties можно пихать прямо в конструктор через @Value
     public IOServiceImpl(@Value("#{T(java.lang.System).in}") InputStream inputStream) {
         this.bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+
+        System.out.println("This is IOServiceImpl constructor"); // for test
     }
 
     @SneakyThrows
