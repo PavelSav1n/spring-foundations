@@ -22,7 +22,7 @@ public class ProgrammerServiceImplTest {
     // В классе ProgrammerServiceImpl используются две зависимости:
     //      - private final NotebookService notebookService;
     //      - private final IOService ioService;
-    // Поэтому прописываем два бина в конфигурации:
+    // Поэтому прописываем три бина в конфигурации, два подставных и третий из первых двух:
 
     @Configuration
     static class MyConfiguration {
