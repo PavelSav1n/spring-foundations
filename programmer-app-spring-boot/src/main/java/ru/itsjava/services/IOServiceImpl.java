@@ -13,6 +13,7 @@ public class IOServiceImpl implements IOService {
     private final BufferedReader bufferedReader;
 
     // Значения из app.properties можно пихать прямо в конструктор через @Value
+    // Сейчас мы используем application.yaml, у Spring есть для этого библиотека
     public IOServiceImpl(@Value("#{T(java.lang.System).in}") InputStream inputStream) {
         this.bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
 

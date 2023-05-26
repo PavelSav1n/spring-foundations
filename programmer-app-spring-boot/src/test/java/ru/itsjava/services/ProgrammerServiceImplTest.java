@@ -9,6 +9,10 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import ru.itsjava.domain.Notebook;
 
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 
 @SpringBootTest
@@ -54,7 +58,14 @@ public class ProgrammerServiceImplTest {
     @Test
     public void ShouldHaveCorrectSayHiToNewProgrammer() {
 
+        ByteArrayOutputStream out = new ByteArrayOutputStream(); // байтовый стрим
+        //System.out можно переопределить через System.setOut:
+        System.setOut(new PrintStream(out)); // пишем стрим System.out в новый PrintStream байтовый поток out. То есть весь System.out теперь хранится в байтовом стриме "out"
         programmerService.hiToNewProgrammer();
+
+        assertEquals("Enter your name: \r\n" +
+                "Hello, Pavel\r\n" +
+                "Your computer: Notebook {Asus SomeModel 2230}\r\n", out.toString());
 
     }
 
