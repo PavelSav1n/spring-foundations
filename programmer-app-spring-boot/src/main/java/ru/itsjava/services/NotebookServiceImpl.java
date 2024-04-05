@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import ru.itsjava.domain.Notebook;
 
-@Service
+@Service("notebookService")
 public class NotebookServiceImpl implements NotebookService {
     private final String firm;
     private final String model;

@@ -2,3 +2,9 @@ notebook:
   firm: Apple
   model: Spring-Boot-application.yaml
   year: 2025
+
+conditional-domain:
+  info: this is a conditional domain
+  valueFromProperties: da
+
+createBean: true

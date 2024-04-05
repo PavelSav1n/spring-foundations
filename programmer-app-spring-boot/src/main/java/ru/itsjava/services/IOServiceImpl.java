@@ -8,7 +8,7 @@ import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
-@Service // Аннотация @Service, потому что это сервис. Наследуется от @Component.
+@Service("ioService") // Аннотация @Service, потому что это сервис. Наследуется от @Component.
 public class IOServiceImpl implements IOService {
     private final BufferedReader bufferedReader;
 

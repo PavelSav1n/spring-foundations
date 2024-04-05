@@ -12,11 +12,12 @@ import ru.itsjava.Piglet;
 public class MyConfig {
 
     @Bean
-    public Animal piglet(){
+    public Animal piglet() {
         return new Piglet();
     }
 
-    @Bean Animal cow(){
+    @Bean
+    public Animal cow() {
         return new Cow();
     }
 
